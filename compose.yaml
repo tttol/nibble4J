@@ -1,1 +1,13 @@
 services:
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nibble
+      MYSQL_USER: nibble
+      MYSQL_PASSWORD: nibble
