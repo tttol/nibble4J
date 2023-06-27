@@ -11,3 +11,11 @@ services:
       MYSQL_DATABASE: nibble
       MYSQL_USER: nibble
       MYSQL_PASSWORD: nibble
+  flyway:
+    image: redgate/flyway
+    command: -url=jdbc:mysql://db -schemas=nibble -user=root -password=root -connectRetries=60 migrate
+    volumes:
+      - ./flyway/migration:/flyway/sql
+      - ./flyway/conf:/flyway/conf
+    depends_on:
+      - db
