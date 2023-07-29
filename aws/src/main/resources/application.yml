@@ -5,3 +5,9 @@ logging:
       github:
         tttol:
           nibble4j: DEBUG
+app:
+  aws:
+    accessKey:
+    accessSecret:
+    s3:
+      bucketName:
