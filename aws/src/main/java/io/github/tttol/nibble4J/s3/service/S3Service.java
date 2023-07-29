@@ -1,11 +1,10 @@
 package io.github.tttol.nibble4J.s3.service;
 
+import io.github.tttol.nibble4J.s3.client.S3ClientSetup;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
 import software.amazon.awssdk.services.s3.model.ListObjectsResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
@@ -15,24 +14,15 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class S3Service {
-    @Value("${app.aws.accessKey}")
-    private String accessKey;
-    @Value("${app.aws.accessSecret}")
-    private String accessSecret;
     @Value("${app.aws.s3.bucketName}")
     private String bucketName;
 
-    public String listObjects() {
-        System.setProperty("aws.accessKeyId", accessKey);
-        System.setProperty("aws.secretKey", accessSecret);
+    private final S3ClientSetup s3ClientSetup;
 
-        final var credentialsProvider = ProfileCredentialsProvider.create();
-        final var region = Region.AP_NORTHEAST_1;
-        final var s3Client = S3Client.builder()
-                .region(region)
-                .credentialsProvider(credentialsProvider)
-                .build();
+    public String listObjects() {
+        final var s3Client = s3ClientSetup.build();
         try (s3Client) {
             final ListObjectsRequest listObjects = ListObjectsRequest
                     .builder()
