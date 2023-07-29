@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Nibble4JApplication {
+public class AwsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Nibble4JApplication.class, args);
+	public static void main(final String[] args) {
+		SpringApplication.run(AwsApplication.class, args);
 	}
 
 }

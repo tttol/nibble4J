@@ -7,51 +7,45 @@ plugins {
 group = 'io.github.tttol'
 version = '0.0.1-SNAPSHOT'
 
-java {
-    sourceCompatibility = '17'
-}
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
 
-repositories {
-    mavenCentral()
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    java {
+        sourceCompatibility = '17'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//        developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+        // mybatis
+//        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+//        implementation 'org.mybatis.generator:mybatis-generator-core:1.4.2'
+//        implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.4.1'
+//        implementation 'org.mybatis.scripting:mybatis-thymeleaf:1.0.4'
+//        testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 }
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'com.mysql:mysql-connector-j:8.0.33'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    // mybatis
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
-    implementation 'org.mybatis.generator:mybatis-generator-core:1.4.2'
-    implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.4.1'
-    implementation 'org.mybatis.scripting:mybatis-thymeleaf:1.0.4'
-    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
-
-    // flyway
-//	implementation 'org.flywaydb:flyway-core:9.17.0'
-//	implementation 'org.flywaydb:flyway-mysql:9.17.0'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-//flyway {
-//	url = 'jdbc:mysql://localhost:3306'
-//	user = 'root'
-//	password = 'root'
-//	schemas = ['nibble']
-//	baselineOnMigrate = true
-//}
